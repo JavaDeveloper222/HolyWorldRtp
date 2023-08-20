@@ -4,6 +4,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import me.galtap.holyworldrtp.command.RtpCMD;
 import me.galtap.holyworldrtp.manager.configs.EffectConfig;
 import me.galtap.holyworldrtp.rtpFactory.RtpFactory;
+import me.galtap.holyworldrtp.utility.Cooldown;
 import me.galtap.holyworldrtp.utility.DefaultConfig;
 import me.galtap.holyworldrtp.utility.ErrorHandle;
 import org.bukkit.Bukkit;
@@ -35,6 +36,8 @@ public final class HolyWorldRtp extends JavaPlugin {
             Bukkit.getLogger().warning("[HolyWorldRtp] Внимания команда /rtp base  не будут доступна скачайте worldGuard");
         }
 
+
+        Cooldown.create();
         RtpFactory rtpFactory = new RtpFactory(this,errorHandle,messageSection,titleSection,effectManager);
         new RtpCMD(this,rtpFactory,guardApiState);
 

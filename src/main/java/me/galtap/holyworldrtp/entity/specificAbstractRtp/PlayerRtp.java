@@ -54,6 +54,7 @@ public class PlayerRtp extends SpecificAbstractRtp {
         if(player == null) return;
         if(locationIsNull(location,player))return;
         player.sendTitle(messages.getFindTitleText(),messages.getFindTitleSubtext(),30,60,30);
+        location.setY(location.getBlockY()+1);
         teleportProcess(location,player);
         player.sendTitle(messages.getWarningTitleText(),messages.getWarningTitleSubtext(),30,60,30);
     }

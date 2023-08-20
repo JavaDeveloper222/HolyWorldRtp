@@ -78,6 +78,7 @@ public class BaseRtp extends SpecificAbstractRtp {
     public void teleport(Location location, Player player) {
         if(locationIsNull(location,player))return;
         player.sendTitle(messages.getFindBaseTitleText(),messages.getFindBaseTitleSubtext(),30,60,30);
+        location.setY(location.getBlockY()+1);
         teleportProcess(location,player);
     }
 

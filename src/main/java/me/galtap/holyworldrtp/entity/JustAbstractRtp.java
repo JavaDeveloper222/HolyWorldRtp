@@ -18,16 +18,16 @@ public abstract class JustAbstractRtp extends AbstractRtp {
         super(config, messages, effects);
     }
     @Override
-    public boolean hasPermission(Player player){
+    public boolean hasNotPermission(Player player){
         for(String group: getGroups().keySet()){
             if(PermissionUtil.isHavePermission(getPermission()+"."+group,player)){
                 value = getGroups().get(group);
                 setKey(getCooldownKey()+"."+player.getUniqueId());
-                return true;
+                return false;
             }
         }
         player.sendMessage(messages.getNo_permission());
-        return false;
+        return true;
     }
     public boolean isNotForbiddenWorld(Player player){
         if(getWorldBlockList().contains(player.getWorld().getName())){

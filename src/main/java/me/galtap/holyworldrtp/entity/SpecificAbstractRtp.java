@@ -19,14 +19,14 @@ public abstract class SpecificAbstractRtp extends AbstractRtp {
         super(config, messages, effects);
     }
     @Override
-    public boolean hasPermission(Player player){
+    public boolean hasNotPermission(Player player){
         setKey(getCooldownKey()+"."+player.getUniqueId());
         if(PermissionUtil.isHavePermission(getPermission(),player)){
             worldFilter();
-            return true;
+            return false;
         }
         player.sendMessage(messages.getNo_permission());
-        return false;
+        return true;
     }
 
     public Location getSafeLocation(Location center){

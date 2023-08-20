@@ -30,7 +30,7 @@ public class RtpCMD extends AbstractCommand{
         Player player = (Player) sender;
         if(args.length == 0){
             StandardRtp rtp = rtpFactory.getStandardRtp();
-            if(!rtp.hasPermission(player)) return;
+            if(rtp.hasNotPermission(player)) return;
             if(rtp.isNotForbiddenWorld(player)) return;
             if(rtp.hasCooldown(player)) return;
             Location location = rtp.getSafeLocation();
@@ -40,7 +40,7 @@ public class RtpCMD extends AbstractCommand{
         if(args.length == 1){
             if(args[0].equalsIgnoreCase("player")){
                 PlayerRtp rtp = rtpFactory.getPlayerRtp();
-                if(!rtp.hasPermission(player)) return;
+                if(rtp.hasNotPermission(player)) return;
                 if(rtp.hasCooldown(player)) return;
                 if(!rtp.serverHasPlayers(player)) return;
                 World world = rtp.getRandmWorld();
@@ -60,7 +60,7 @@ public class RtpCMD extends AbstractCommand{
                     return;
                 }
                 BaseRtp rtp = rtpFactory.getBaseRtp();
-                if(!rtp.hasPermission(player)) return;
+                if(rtp.hasNotPermission(player)) return;
                 if(rtp.hasCooldown(player)) return;
                 World world = rtp.getRandmWorld();
                 Location center = rtp.getRandomRegion(world,player);
@@ -78,7 +78,7 @@ public class RtpCMD extends AbstractCommand{
             String rtpType = args[0];
             CustomRtp customRtp = rtpFactory.getCustomRtp();
             if(!customRtp.isTrueType(rtpType,player)) return;
-            if(!customRtp.hasPermission(player)) return;
+            if(customRtp.hasNotPermission(player)) return;
             if(customRtp.isNotForbiddenWorld(player)) return;
             if(customRtp.hasCooldown(player)) return;
             Location location = customRtp.getSafeLocation();

@@ -32,6 +32,7 @@ public class CustomRtp extends JustAbstractRtp {
     @Override
     public void teleport(Location location, Player player) {
         if(locationIsNull(location,player)) return;
+        location.setY(location.getBlockY()+1);
         teleportProcess(location,player);
     }
 

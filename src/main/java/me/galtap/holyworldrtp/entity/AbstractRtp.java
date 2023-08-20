@@ -23,7 +23,7 @@ public abstract class AbstractRtp {
         this.messages = messages;
         this.effects = effects;
     }
-    public abstract boolean hasPermission(Player player);
+    public abstract boolean hasNotPermission(Player player);
     public abstract void teleport(Location location, Player player);
     public boolean hasCooldown(Player player){
         if(key== null) return false;
@@ -38,7 +38,6 @@ public abstract class AbstractRtp {
     }
     protected void teleportProcess(Location location, Player player){
         String coordinates = TextUtil.remake("{x}","{y}","{z}",messages.getCoordinates(),String.valueOf(location.getBlockX()),String.valueOf(location.getBlockY()),String.valueOf(location.getBlockZ()));
-        location.setY(location.getBlockY()+1);
         player.teleport(location);
         player.addPotionEffects(effects);
         player.setNoDamageTicks(config.getNoDamageTime()*20);

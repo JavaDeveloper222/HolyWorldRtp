@@ -60,6 +60,7 @@ public class StandardRtp extends JustAbstractRtp {
     public void teleport(Location location, Player player) {
         if(locationIsNull(location,player)) return;
         String coordinates = TextUtil.remake("{x}","{y}","{z}",messages.getCoordinates(),String.valueOf(location.getBlockX()),String.valueOf(location.getBlockY()),String.valueOf(location.getBlockZ()));
+        location.setY(location.getBlockY()+1);
         if(value == 0){
             teleportProcess(location,player);
             return;
