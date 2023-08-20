@@ -1,0 +1,75 @@
+StandardRtp:
+  xMin: 2000
+  xMax: 3000
+  zMin: 2000
+  zMax: 3000
+  world: "world"
+  cooldown: 10
+  enableCheckMove: true
+  worldBlock:
+    - "world_nether"
+  delay:
+    default: 3
+    vip: 0
+
+CustomRtp:
+  type:
+    long:
+      xMin: 2000
+      xMax: 4500
+      zMin: 2000
+      zMax: 4500
+      world: "world"
+    small:
+      xMin: 500
+      xMax: 1500
+      zMin: 500
+      zMax: 1500
+      world: "world"
+
+  worldBlock:
+    long:
+      - "world_nether"
+    small:
+      - "world_nether"
+
+  cooldown:
+    long:
+      default: 60
+      vip: 0
+    small:
+      default: 30
+      vip: 0
+
+
+RtpPlayer:
+  minOnlineInServer: 2
+  minOnlineInWorld: 2
+  minDistance: 5
+  maxDistance: 30
+  cooldown: 60
+  worldBlock:
+    - "world_nether"
+
+RtpBase:
+  minDistance: 50
+  maxDistance: 100
+  cooldown: 30
+  blockCheck:
+    enable: true
+    regionBlocks:
+      - DIAMOND
+  worldBlock:
+    - "world_nether"
+
+
+RtpHelpList:
+  - "помощь по командам"
+
+MaxY: 120
+TryFoundLocation: 25
+NoDamageTime: 3
+blockList:
+  - LAVA
+  - WATER
+  - AIR

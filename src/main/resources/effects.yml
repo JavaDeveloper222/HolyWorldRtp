@@ -1,0 +1,19 @@
+StandardRtp:
+  BLINDNESS:
+    level: 2
+    time: 2
+
+CustomRtp:
+  BLINDNESS:
+    level: 2
+    time: 2
+
+RtpPlayer:
+  BLINDNESS:
+    level: 2
+    time: 2
+
+RtpBase:
+  BLINDNESS:
+    level: 2
+    time: 2

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HolyWorldRtp:jar">
+    <output-path>$PROJECT_DIR$/../../../локальные сервера/сервер 1.16.5/plugins</output-path>
+    <root id="archive" name="HolyWorldRtp.jar">
+      <element id="module-output" name="HolyWorldRtp" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.1/annotations-24.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

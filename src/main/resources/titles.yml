@@ -1,0 +1,18 @@
+StandardRtp:
+  teleportTitle:
+    text: "Телепортация..."
+    subtext: "подождите {sec} секунд"
+
+RtpPlayer:
+  findPlayerTitle:
+    text: "Пожалуйста подождите"
+    subtext: "идет поиск игрока"
+  warningTitle:
+    text: "Осторожно"
+    subtext: "Рядом может быть игрок"
+
+
+RtpBase:
+  findBaseTitle:
+    text: "Подождите..."
+    subtext: "идет поиск базы"
