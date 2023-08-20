@@ -27,7 +27,7 @@ public class RtpFactory {
         customRtp = new CustomRtp(new CustomRtpConfig(plugin,errorHandle), new CustomRtpMessages(messageFileSection),effectConfig.getCustomRtp_effects());
         playerRtp = new PlayerRtp(new PlayerRtpConfig(plugin,errorHandle), new PlayerRtpMessages(messageFileSection,titleFileSection),effectConfig.getPlayerRtp_effects());
         baseRtp = new BaseRtp(new BaseRtpConfig(plugin,errorHandle),new BaseRtpMessages(messageFileSection,titleFileSection),effectConfig.getBaseRtp_effects());
-        helpList = baseRtp.getMessages().getHelpList();
+        helpList = baseRtp.getConfig().getHelpList();
         errorArgs = baseRtp.getMessages().getErrorArgs();
     }
 

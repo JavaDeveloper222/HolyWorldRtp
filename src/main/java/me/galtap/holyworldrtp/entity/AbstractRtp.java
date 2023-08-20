@@ -17,7 +17,7 @@ public abstract class AbstractRtp {
     private String key;
 
 
-    public AbstractRtp(AbstractConfig config, AbstractMessages messages, List<PotionEffect> effects){
+    protected AbstractRtp(AbstractConfig config, AbstractMessages messages, List<PotionEffect> effects){
 
         this.config = config;
         this.messages = messages;

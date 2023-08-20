@@ -12,6 +12,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class RtpCMD extends AbstractCommand{
 
 
@@ -53,10 +57,7 @@ public class RtpCMD extends AbstractCommand{
             }
             if(args[0].equalsIgnoreCase("base")){
                 if(!worldGuardExists){
-                    if(player.isOp()){
-                        player.sendMessage(ChatColor.RED+"Чтобы использовать данную команду нужен плагин worldGuard");
-                        return;
-                    }
+                    if(player.isOp()) player.sendMessage(ChatColor.RED+"Чтобы использовать данную команду нужен плагин worldGuard");
                     return;
                 }
                 BaseRtp rtp = rtpFactory.getBaseRtp();
@@ -86,5 +87,15 @@ public class RtpCMD extends AbstractCommand{
             return;
         }
         player.sendMessage(rtpFactory.getErrorArgs());
+    }
+    @Override
+    public List<String> complete(CommandSender sender, String[] args){
+        if(!(sender instanceof Player)) return null;
+        List<String> list = new ArrayList<>();
+        if(args.length == 1){
+            list.add("help");
+            return list;
+        }
+        return Collections.emptyList();
     }
 }

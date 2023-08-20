@@ -1,6 +1,7 @@
 package me.galtap.holyworldrtp.manager;
 
 import me.galtap.holyworldrtp.utility.ErrorHandle;
+import me.galtap.holyworldrtp.utility.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,12 +18,14 @@ public abstract class AbstractConfig {
     protected int cooldown;
     private final int tryFindLocation;
     protected final Set<Material> blockList = new HashSet<>();
+    private final List<String> helpList;
 
-    public AbstractConfig(JavaPlugin plugin, ErrorHandle errorHandle){
+    protected AbstractConfig(JavaPlugin plugin, ErrorHandle errorHandle){
         ConfigurationSection section = plugin.getConfig();
         maxY = errorHandle.check(section,120,"MaxY");
         noDamageTime = errorHandle.check(section,2,"NoDamageTime");
         tryFindLocation = errorHandle.check(section,25,"TryFoundLocation");
+        helpList = TextUtil.getColorText(section.getStringList("RtpHelpList"));
         List<String> materialNames = section.getStringList("blockList");
         for(String materialName: materialNames){
             Material material = Material.getMaterial(materialName);
@@ -54,5 +57,9 @@ public abstract class AbstractConfig {
 
     public int getTryFindLocation() {
         return tryFindLocation;
+    }
+
+    public List<String> getHelpList() {
+        return helpList;
     }
 }

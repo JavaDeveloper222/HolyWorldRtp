@@ -9,10 +9,11 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LocationUtility {
+    private LocationUtility(){
+        throw new AssertionError("Utility class LocationUtility cannot be instantiated.");
+    }
     public static Location getRandomLocation(int xMin, int xMax, int zMin, int zMax, int yMax, World world, boolean enableNegativeNum) {
         if (world == null || yMax < world.getMinHeight() || yMax > world.getMaxHeight()) {
-            System.out.println(world);
-            System.out.println(yMax);
             return null;
         }
 

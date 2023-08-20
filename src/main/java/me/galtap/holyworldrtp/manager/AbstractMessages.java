@@ -3,8 +3,6 @@ package me.galtap.holyworldrtp.manager;
 import me.galtap.holyworldrtp.utility.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.List;
-
 public abstract class AbstractMessages {
     private final String no_permission;
     private final String cooldownMessage;
@@ -13,16 +11,15 @@ public abstract class AbstractMessages {
     private final String notFoundPlace;
     private final String worldBlockMessage;
     private final String errorArgs;
-    private final List<String> helpList;
-    public AbstractMessages(ConfigurationSection section){
-        no_permission = TextUtil.getColorText(section.getString("No_permission","Обнаружена ошибка в messages.yml исправьте ее"));
-        cooldownMessage = TextUtil.getColorText(section.getString("Cooldown","Обнаружена ошибка в messages.yml исправьте ее"));
-        teleportMessage = TextUtil.getColorText(section.getString("Teleport","Обнаружена ошибка в messages.yml исправьте ее"));
-        coordinates = TextUtil.getColorText(section.getString("Coordinates","Обнаружена ошибка в messages.yml исправьте ее"));
-        notFoundPlace = TextUtil.getColorText(section.getString("NoFoundPlace","Обнаружена ошибка в messages.yml исправьте ее"));
-        worldBlockMessage = TextUtil.getColorText(section.getString("WorldBlock","Обнаружена ошибка в messages.yml исправьте ее"));
-        errorArgs = TextUtil.getColorText(section.getString("ErrorArgs","Обнаружена ошибка в messages.yml исправьте ее"));
-        helpList = TextUtil.getColorText(section.getStringList("RtpHelpList"));
+    protected AbstractMessages(ConfigurationSection section){
+        String errorMessage = "Обнаружена ошибка в messages.yml исправьте ее";
+        no_permission = TextUtil.getColorText(section.getString("No_permission",errorMessage));
+        cooldownMessage = TextUtil.getColorText(section.getString("Cooldown",errorMessage));
+        teleportMessage = TextUtil.getColorText(section.getString("Teleport",errorMessage));
+        coordinates = TextUtil.getColorText(section.getString("Coordinates",errorMessage));
+        notFoundPlace = TextUtil.getColorText(section.getString("NoFoundPlace",errorMessage));
+        worldBlockMessage = TextUtil.getColorText(section.getString("WorldBlock",errorMessage));
+        errorArgs = TextUtil.getColorText(section.getString("ErrorArgs",errorMessage));
     }
     protected ConfigurationSection sectionProcess(ConfigurationSection mainSection, String name){
         if(mainSection.contains(name)) return mainSection.getConfigurationSection(name);
@@ -55,9 +52,5 @@ public abstract class AbstractMessages {
 
     public String getErrorArgs() {
         return errorArgs;
-    }
-
-    public List<String> getHelpList() {
-        return helpList;
     }
 }

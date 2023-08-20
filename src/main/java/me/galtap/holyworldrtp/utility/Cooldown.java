@@ -3,6 +3,10 @@ package me.galtap.holyworldrtp.utility;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Cooldown {
+    private Cooldown(){
+        // private constructor to prevent instantiation
+        throw new AssertionError("Utility class Cooldown cannot be instantiated.");
+    }
     private static ConcurrentHashMap<String, Long> cool;
     private static long delay;
 
@@ -11,7 +15,7 @@ public class Cooldown {
     }
 
     public static void setCooldown(String cmd, int second) {
-        cool.put(cmd, System.currentTimeMillis() + (long)second * 1000L);
+        cool.put(cmd, System.currentTimeMillis() + second * 1000L);
     }
 
     public static boolean checkCooldown(String cmd) {

@@ -47,7 +47,8 @@ public class DefaultConfig {
             try {
                 this.getConfig().save(this.file);
             } catch (IOException e) {
-                throw new RuntimeException(ChatColor.RED + "не удалось сохранить файл " + this.file.getName(), e);
+                String errorMessage = String.format("Failed to save the file %s. Reason: %s", this.file.getName(), e.getMessage());
+                throw new RuntimeException(ChatColor.RED + errorMessage, e);
             }
         }
     }

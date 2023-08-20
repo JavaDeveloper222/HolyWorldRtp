@@ -9,6 +9,10 @@ import org.bukkit.potion.PotionEffect;
 import java.util.List;
 
 public class StreamUpdate {
+    private StreamUpdate() {
+        // private constructor to prevent instantiation
+        throw new AssertionError("Utility class StreamUpdate cannot be instantiated.");
+    }
     private static int checkMoveTask;
     private static int teleportTask;
     public static void checkMove(Location startLocation, Player player, String message, JavaPlugin plugin){

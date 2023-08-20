@@ -4,6 +4,7 @@ import me.galtap.holyworldrtp.manager.AbstractConfig;
 import me.galtap.holyworldrtp.manager.AbstractMessages;
 import me.galtap.holyworldrtp.utility.LocationUtility;
 import me.galtap.holyworldrtp.utility.PermissionUtil;
+import me.galtap.holyworldrtp.utility.TextUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public abstract class JustAbstractRtp extends AbstractRtp {
     protected int value;
-    public JustAbstractRtp(AbstractConfig config, AbstractMessages messages, List<PotionEffect> effects) {
+    protected JustAbstractRtp(AbstractConfig config, AbstractMessages messages, List<PotionEffect> effects) {
         super(config, messages, effects);
     }
     @Override
@@ -31,7 +32,7 @@ public abstract class JustAbstractRtp extends AbstractRtp {
     }
     public boolean isNotForbiddenWorld(Player player){
         if(getWorldBlockList().contains(player.getWorld().getName())){
-            player.sendMessage(messages.getWorldBlockMessage());
+            player.sendMessage(TextUtil.remake("{world}",messages.getWorldBlockMessage(),player.getWorld().getName()));
             return true;
         }
         return false;

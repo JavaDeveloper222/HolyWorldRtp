@@ -40,6 +40,7 @@ public class PlayerRtp extends SpecificAbstractRtp {
         return true;
     }
     public Player getRandomPlayer(World world,Player player){
+        player.sendTitle(messages.getFindTitleText(),messages.getFindTitleSubtext(),30,60,30);
         List<Player> players = world.getPlayers();
         players.remove(player);
         if(players.isEmpty()){
@@ -53,7 +54,6 @@ public class PlayerRtp extends SpecificAbstractRtp {
     public void teleport(Location location, Player player) {
         if(player == null) return;
         if(locationIsNull(location,player))return;
-        player.sendTitle(messages.getFindTitleText(),messages.getFindTitleSubtext(),30,60,30);
         location.setY(location.getBlockY()+1);
         teleportProcess(location,player);
         player.sendTitle(messages.getWarningTitleText(),messages.getWarningTitleSubtext(),30,60,30);
@@ -74,7 +74,6 @@ public class PlayerRtp extends SpecificAbstractRtp {
     @Override
     protected List<String> getWorldBlockList() {
         if(config == null){
-            System.out.println("null");
             return new ArrayList<>();
         }
         return config.getWorldBlockList();

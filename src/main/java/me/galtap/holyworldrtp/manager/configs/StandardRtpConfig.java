@@ -22,7 +22,7 @@ public class StandardRtpConfig extends AbstractConfig {
     public StandardRtpConfig(JavaPlugin plugin, ErrorHandle errorHandle) {
         super(plugin, errorHandle);
         ConfigurationSection section = sectionProcess(plugin.getConfig(),"StandardRtp");
-        ConfigurationSection delay_section = sectionProcess(section,"delay");
+        ConfigurationSection delaySection = sectionProcess(section,"delay");
 
         cooldown = errorHandle.check(section,0,"cooldown");
         worldBlockList = section.getStringList("worldBlock");
@@ -33,8 +33,8 @@ public class StandardRtpConfig extends AbstractConfig {
         enableCheckMove = section.getBoolean("enableCheckMove");
         world = errorHandle.check(section,"world");
 
-        for(String group: delay_section.getKeys(false)){
-            int time = errorHandle.check(delay_section,0,group);
+        for(String group: delaySection.getKeys(false)){
+            int time = errorHandle.check(delaySection,0,group);
             groups.put(group,time);
 
         }

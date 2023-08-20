@@ -27,6 +27,7 @@ public class BaseRtp extends SpecificAbstractRtp {
 
     }
     public Location getRandomRegion(World world,Player player){
+        player.sendTitle(messages.getFindBaseTitleText(),messages.getFindBaseTitleSubtext(),30,60,30);
         if(world == null){
             player.sendMessage(messages.getNotFound());
             return null;
@@ -42,7 +43,6 @@ public class BaseRtp extends SpecificAbstractRtp {
             regions.clear();
             regions.addAll(newRegions);
         }
-        System.out.println(regions);
         if(regions.isEmpty()){
             player.sendMessage(messages.getNotFound());
             return null;
@@ -77,7 +77,6 @@ public class BaseRtp extends SpecificAbstractRtp {
     @Override
     public void teleport(Location location, Player player) {
         if(locationIsNull(location,player))return;
-        player.sendTitle(messages.getFindBaseTitleText(),messages.getFindBaseTitleSubtext(),30,60,30);
         location.setY(location.getBlockY()+1);
         teleportProcess(location,player);
     }
@@ -95,7 +94,6 @@ public class BaseRtp extends SpecificAbstractRtp {
     @Override
     protected List<String> getWorldBlockList() {
         if(config == null){
-            System.out.println("null");
             return new ArrayList<>();
         }
         return config.getWorldBlockList();
@@ -114,6 +112,9 @@ public class BaseRtp extends SpecificAbstractRtp {
     @Override
     protected String getCooldownKey() {
         return "baseRtp";
+    }
+    public BaseRtpConfig getConfig(){
+        return config;
     }
     public BaseRtpMessages getMessages(){
         return messages;

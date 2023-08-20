@@ -14,15 +14,17 @@ public class PlayerRtpMessages extends AbstractMessages {
     private final String warningTitleSubtext;
     public PlayerRtpMessages(ConfigurationSection messageFileSection, ConfigurationSection titleFileSection) {
         super(messageFileSection);
+        String errorMessage = "Обнаружена ошибка в messages.yml исправьте ее";
+        String nullMessage = "null";
         ConfigurationSection section = sectionProcess(messageFileSection,"RtpPlayer");
         ConfigurationSection titleSection = sectionProcess(titleFileSection,"RtpPlayer");
-        minPlayerInServer = TextUtil.getColorText(section.getString("minPlayerInServer","Обнаружена ошибка в messages.yml исправьте ее"));
-        minPlayerInWorld = TextUtil.getColorText(section.getString("minPlayerInWorld","Обнаружена ошибка в messages.yml исправьте ее"));
-        error = TextUtil.getColorText(section.getString("error","Обнаружена ошибка в messages.yml исправьте ее"));
-        findTitleText = TextUtil.getColorText(titleSection.getString("findPlayerTitle.text","null"));
-        findTitleSubtext = TextUtil.getColorText(titleSection.getString("findPlayerTitle.subtext","null"));
-        warningTitleText = TextUtil.getColorText(titleSection.getString("warningTitle.text","null"));
-        warningTitleSubtext = TextUtil.getColorText(titleSection.getString("warningTitle.subtext","null"));
+        minPlayerInServer = TextUtil.getColorText(section.getString("minPlayerInServer",errorMessage));
+        minPlayerInWorld = TextUtil.getColorText(section.getString("minPlayerInWorld",errorMessage));
+        error = TextUtil.getColorText(section.getString("error",errorMessage));
+        findTitleText = TextUtil.getColorText(titleSection.getString("findPlayerTitle.text",nullMessage));
+        findTitleSubtext = TextUtil.getColorText(titleSection.getString("findPlayerTitle.subtext",nullMessage));
+        warningTitleText = TextUtil.getColorText(titleSection.getString("warningTitle.text",nullMessage));
+        warningTitleSubtext = TextUtil.getColorText(titleSection.getString("warningTitle.subtext",nullMessage));
     }
 
     public String getMinPlayerInServer() {

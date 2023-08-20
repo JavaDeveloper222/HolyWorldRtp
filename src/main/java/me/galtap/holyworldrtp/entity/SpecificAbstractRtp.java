@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class SpecificAbstractRtp extends AbstractRtp {
     private final List<World> worlds = new ArrayList<>();
-    public SpecificAbstractRtp(AbstractConfig config, AbstractMessages messages, List<PotionEffect> effects) {
+    protected SpecificAbstractRtp(AbstractConfig config, AbstractMessages messages, List<PotionEffect> effects) {
         super(config, messages, effects);
     }
     @Override

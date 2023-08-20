@@ -32,28 +32,35 @@ public class EffectConfig {
         if(main.contains(name)) return main.getConfigurationSection(name);
         return main.createSection(name);
     }
-    public List<PotionEffect> registerEffects(ConfigurationSection section){
+    public List<PotionEffect> registerEffects(ConfigurationSection section) {
         List<PotionEffect> effects = new ArrayList<>();
-        for(String effectName: section.getKeys(false)){
+
+        for (String effectName : section.getKeys(false)) {
             PotionEffectType type = PotionEffectType.getByName(effectName);
-            if(type == null){
-                Bukkit.getLogger().info(ChatColor.RED+"[HolyWorldRtp] Такого эффекта как - "+effectName+" - не существует");
+
+            if (type == null) {
+                Bukkit.getLogger().info(ChatColor.RED + "[HolyWorldRtp] Такого эффекта как - " + effectName + " - не существует");
                 continue;
             }
-            int level = section.getInt(effectName+".level",-1);
-            int time = section.getInt(effectName+".time",-1);
-            if(level < 0){
-                Bukkit.getLogger().info(ChatColor.RED+"[HolyWorldRtp] Недопустимое значение в пути - "+section.getCurrentPath()+"."+effectName+".level - пропуск");
+
+            int level = section.getInt(effectName + ".level", -1);
+            int time = section.getInt(effectName + ".time", -1);
+
+            if (level < 0) {
+                Bukkit.getLogger().info(ChatColor.RED + "[HolyWorldRtp] Недопустимое значение в пути - " + section.getCurrentPath() + "." + effectName + ".level - пропуск");
                 continue;
             }
-            if(time < 0){
-                Bukkit.getLogger().info(ChatColor.RED+"[HolyWorldRtp] Недопустимое значение в пути - "+section.getCurrentPath()+"."+effectName+".time - пропуск");
+
+            if (time < 0) {
+                Bukkit.getLogger().info(ChatColor.RED + "[HolyWorldRtp] Недопустимое значение в пути - " + section.getCurrentPath() + "." + effectName + ".time - пропуск");
                 continue;
             }
-            effects.add(new PotionEffect(type,time*20,level));
+
+            effects.add(new PotionEffect(type, time * 20, level));
         }
         return effects;
     }
+
 
     public List<PotionEffect> getStandardRtp_effects() {
         return standardRtp_effects;

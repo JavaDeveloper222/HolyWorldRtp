@@ -1,70 +1,78 @@
 StandardRtp:
-  xMin: 2000
-  xMax: 3000
-  zMin: 2000
-  zMax: 3000
+  xMin: 500
+  xMax: 2000
+  zMin: 500
+  zMax: 2000
   world: "world"
   cooldown: 10
   enableCheckMove: true
   worldBlock:
     - "world_nether"
   delay:
-    default: 3
-    vip: 0
+    default: 5
+    HOLY: 5
+    PALADIN: 5
+    MASTER: 5
+    GLADIATOR: 5
+    OVERLORD: 5
+    ELDER: 5
+    PHANTOM: 0
+    KING: 0
+
 
 CustomRtp:
   type:
     long:
       xMin: 2000
-      xMax: 4500
+      xMax: 3000
       zMin: 2000
-      zMax: 4500
-      world: "world"
-    small:
-      xMin: 500
-      xMax: 1500
-      zMin: 500
-      zMax: 1500
+      zMax: 3000
       world: "world"
 
   worldBlock:
     long:
       - "world_nether"
-    small:
-      - "world_nether"
 
   cooldown:
     long:
-      default: 60
-      vip: 0
-    small:
       default: 30
-      vip: 0
-
+      MASTER: 30
+      GLADIATOR: 30
+      OVERLORD: 30
+      ELDER: 30
+      PHANTOM: 30
+      KING: 30
 
 RtpPlayer:
   minOnlineInServer: 2
   minOnlineInWorld: 2
-  minDistance: 5
-  maxDistance: 30
+  minDistance: 10
+  maxDistance: 110
   cooldown: 60
   worldBlock:
     - "world_nether"
 
 RtpBase:
-  minDistance: 50
-  maxDistance: 100
-  cooldown: 30
+  minDistance: 2
+  maxDistance: 102
+  cooldown: 60
   blockCheck:
     enable: true
     regionBlocks:
       - DIAMOND
+      - EMERALD
+      - NETHERITE_BLOCK
   worldBlock:
     - "world_nether"
 
 
 RtpHelpList:
-  - "помощь по командам"
+  - "§bПомощь по телепортациям"
+  - ""
+  - "Стандартная телепортация - §6/rtp"
+  - "Далекая телепортация - §6/rtp long"
+  - "Телепортация к безе игроков - §6/rtp base"
+  - "Телепортация к случайному игроку - §6/rtp player"
 
 MaxY: 120
 TryFoundLocation: 25
@@ -73,3 +81,4 @@ blockList:
   - LAVA
   - WATER
   - AIR
+

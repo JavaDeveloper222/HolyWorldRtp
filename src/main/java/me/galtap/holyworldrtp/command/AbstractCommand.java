@@ -7,10 +7,11 @@ import org.jetbrains.annotations.Nullable;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
-    public AbstractCommand(String command, JavaPlugin plugin){
+    protected AbstractCommand(String command, JavaPlugin plugin){
         PluginCommand pluginCommand = plugin.getCommand(command);
         if(pluginCommand != null){
             pluginCommand.setExecutor(this);
@@ -19,7 +20,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     }
     public abstract void execute(CommandSender sender, String label, String[] args);
     public List<String> complete(CommandSender sender,String[] args){
-        return null;
+        return Collections.emptyList();
     }
     
     @Override
@@ -33,7 +34,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
         return filter(complete(sender,args),args);
     }
     private List<String> filter(List<String> list,String[] args){
-        if(list == null) return null;
+        if(list == null) return Collections.emptyList();
         String last = args[args.length - 1];
         List<String> result = new ArrayList<>();
         for(String arg: list){

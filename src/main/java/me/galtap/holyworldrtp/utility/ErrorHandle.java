@@ -31,7 +31,8 @@ public class ErrorHandle {
         }
         return world;
     }
-    public void reportError(String path,Object def){
-        Bukkit.getLogger().info(ChatColor.RED + "[" + pluginName + "] Обнаружена ошибка в " + fileName + ". Недопустимое значение в пути - " + path + " - исправьте ошибку. Переход в первоначальное значение - "+def);
+    public void reportError(String path, Object def) {
+        String message = String.format("[%s] Обнаружена ошибка в %s. Недопустимое значение в пути - %s - исправьте ошибку. Переход в первоначальное значение - %s", pluginName, fileName, path, def);
+        Bukkit.getLogger().info(ChatColor.RED + message);
     }
 }
