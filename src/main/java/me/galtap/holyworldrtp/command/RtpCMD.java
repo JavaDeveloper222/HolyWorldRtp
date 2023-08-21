@@ -4,8 +4,8 @@ import me.galtap.holyworldrtp.entity.justRtp.CustomRtp;
 import me.galtap.holyworldrtp.entity.justRtp.StandardRtp;
 import me.galtap.holyworldrtp.entity.specificAbstractRtp.BaseRtp;
 import me.galtap.holyworldrtp.entity.specificAbstractRtp.PlayerRtp;
-import me.galtap.holyworldrtp.rtpFactory.RtpFactory;
-import org.bukkit.ChatColor;
+import me.galtap.holyworldrtp.factory.ApiFactory;
+import me.galtap.holyworldrtp.factory.RtpFactory;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -20,12 +20,12 @@ public class RtpCMD extends AbstractCommand{
 
 
     private final RtpFactory rtpFactory;
-    private final boolean worldGuardExists;
+    private final ApiFactory apiFactory;
 
-    public RtpCMD(JavaPlugin plugin, RtpFactory rtpFactory, boolean worldGuardExists) {
+    public RtpCMD(JavaPlugin plugin, RtpFactory rtpFactory, ApiFactory apiFactory) {
         super("rtp", plugin);
         this.rtpFactory = rtpFactory;
-        this.worldGuardExists = worldGuardExists;
+        this.apiFactory = apiFactory;
     }
 
     @Override
@@ -56,18 +56,15 @@ public class RtpCMD extends AbstractCommand{
                 return;
             }
             if(args[0].equalsIgnoreCase("base")){
-                if(!worldGuardExists){
-                    if(player.isOp()) player.sendMessage(ChatColor.RED+"Чтобы использовать данную команду нужен плагин worldGuard");
-                    return;
-                }
-                BaseRtp rtp = rtpFactory.getBaseRtp();
-                if(rtp.hasNotPermission(player)) return;
-                if(rtp.hasCooldown(player)) return;
-                World world = rtp.getRandmWorld();
-                Location center = rtp.getRandomRegion(world,player);
-                if(center == null) return;
-                Location location = rtp.getSafeLocation(center);
-                rtp.teleport(location,player);
+                if(!apiFactory.getGuardApi().isExists()) return;
+                BaseRtp baseRtp = rtpFactory.getBaseRtp();
+                if(baseRtp.hasNotPermission(player)) return;
+                if(baseRtp.hasCooldown(player)) return;
+                Location centerRegion = baseRtp.getRandomCenterRegion(apiFactory.getGuardApi(),player);
+                if(centerRegion == null) return;
+                Location location = baseRtp.getSafeLocation(centerRegion);
+                if(location == null) return;
+                baseRtp.teleport(location,player);
                 return;
             }
             if(args[0].equalsIgnoreCase("help")){
@@ -90,7 +87,7 @@ public class RtpCMD extends AbstractCommand{
     }
     @Override
     public List<String> complete(CommandSender sender, String[] args){
-        if(!(sender instanceof Player)) return null;
+        if(!(sender instanceof Player)) return Collections.emptyList();
         List<String> list = new ArrayList<>();
         if(args.length == 1){
             list.add("help");

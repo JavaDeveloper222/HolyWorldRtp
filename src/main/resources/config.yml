@@ -1,13 +1,22 @@
 StandardRtp:
+  #минимальные и максимальные координаты (не меньше 0!)
   xMin: 500
   xMax: 2000
   zMin: 500
   zMax: 2000
   world: "world"
   cooldown: 10
+
+  #включить проверку движения при стандартной случайной телепортации
   enableCheckMove: true
+
+
+  #запрещенные миры, где телепорт нельзя использовать
   worldBlock:
     - "world_nether"
+
+
+  #настройка групп и их задержек перед телепортацией
   delay:
     default: 5
     HOLY: 5
@@ -19,9 +28,10 @@ StandardRtp:
     PHANTOM: 0
     KING: 0
 
-
+#создание своих собственных видов
 CustomRtp:
   type:
+
     long:
       xMin: 2000
       xMax: 3000
@@ -29,11 +39,15 @@ CustomRtp:
       zMax: 3000
       world: "world"
 
+    #тут можно добавлять еще
+
   worldBlock:
     long:
       - "world_nether"
 
+  #настройка групп и их cooldown
   cooldown:
+
     long:
       default: 30
       MASTER: 30
@@ -43,12 +57,15 @@ CustomRtp:
       PHANTOM: 30
       KING: 30
 
+
 RtpPlayer:
   minOnlineInServer: 2
   minOnlineInWorld: 2
   minDistance: 10
   maxDistance: 110
   cooldown: 60
+
+  #миры где не происходит поиск игроков
   worldBlock:
     - "world_nether"
 
@@ -56,12 +73,18 @@ RtpBase:
   minDistance: 2
   maxDistance: 102
   cooldown: 60
+
+  #поиск баз имеет 2 режима
   blockCheck:
+
+    #если включено, то поиск будет только тех баз которые имеют в центре нужные блоки
     enable: true
     regionBlocks:
       - DIAMOND
       - EMERALD
       - NETHERITE_BLOCK
+
+  #миры, где поиск баз не будет
   worldBlock:
     - "world_nether"
 
@@ -70,12 +93,20 @@ RtpHelpList:
   - "§bПомощь по телепортациям"
   - ""
   - "Стандартная телепортация - §6/rtp"
-  - "Далекая телепортация - §6/rtp long"
+  - "своя созданная телепортация - §6/rtp <твой вариант>"
   - "Телепортация к безе игроков - §6/rtp base"
   - "Телепортация к случайному игроку - §6/rtp player"
 
+
+#максимальная высота Y откуда будет происходить поиск локации
 MaxY: 120
+
+
+#количество попыток поиска локации
 TryFoundLocation: 25
+
+
+#неуязвимость после телепортации в секундах
 NoDamageTime: 3
 blockList:
   - LAVA

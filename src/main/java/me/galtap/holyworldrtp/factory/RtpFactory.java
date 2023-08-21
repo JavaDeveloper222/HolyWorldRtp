@@ -1,4 +1,4 @@
-package me.galtap.holyworldrtp.rtpFactory;
+package me.galtap.holyworldrtp.factory;
 
 import me.galtap.holyworldrtp.entity.justRtp.CustomRtp;
 import me.galtap.holyworldrtp.entity.justRtp.StandardRtp;

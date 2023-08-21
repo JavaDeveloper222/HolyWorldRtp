@@ -5,4 +5,5 @@ api-version: '1.16'
 commands:
   rtp:
     description: команда которая дает доступ к случайным телепортам
-softdepend: [WorldGuard]
+softdepend:
+   - WorldGuard
