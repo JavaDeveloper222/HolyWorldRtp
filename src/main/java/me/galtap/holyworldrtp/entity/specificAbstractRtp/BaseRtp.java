@@ -21,6 +21,7 @@ public class BaseRtp extends SpecificAbstractRtp {
         this.messages = messages;
     }
     public Location getRandomCenterRegion(WorldGuardApi worldGuardApi, Player player){
+        player.sendTitle(messages.getFindBaseTitleText(),messages.getFindBaseTitleSubtext(),30,60,30);
         World world = getRandmWorld();
         if(world == null){
             player.sendMessage(messages.getNotFound());

@@ -8,6 +8,7 @@ public class ConfigFactory {
     private final DefaultConfig effectsConfig;
     private final DefaultConfig titleConfig;
     public ConfigFactory(JavaPlugin plugin){
+        plugin.saveDefaultConfig();
         messageConfig = new DefaultConfig(plugin,"messages.yml");
         effectsConfig = new DefaultConfig(plugin,"effects.yml");
         titleConfig = new DefaultConfig(plugin,"titles.yml");
