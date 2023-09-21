@@ -23,32 +23,11 @@ public class WorldGuardApi {
     }
     private boolean checkPlugin(){
         Plugin plugin = Bukkit.getPluginManager().getPlugin("WorldGuard");
-        return plugin instanceof WorldGuardPlugin;
+        return plugin instanceof WorldGuardPlugin && plugin.isEnabled();
     }
-    public ProtectedRegion getRandomRegion(World world, boolean blockCheck,List<Material> blockRegions){
-        if(world == null) return null;
-        RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
-        if(regionManager == null) return null;
-        List<ProtectedRegion> regions = new ArrayList<>(regionManager.getRegions().values());
-        if(blockCheck){
-            List<ProtectedRegion> newRegions = protectionBlockFilter(regions,world,blockRegions);
-            regions.clear();
-            regions.addAll(newRegions);
-        }
-        if(regions.isEmpty()) return null;
+    public ProtectedRegion getRandomRegion(List<ProtectedRegion> regions){
         int randomIndex = LocationUtility.rndInt(0,regions.size()-1);
         return regions.get(randomIndex);
-    }
-    public List<ProtectedRegion> protectionBlockFilter(List<ProtectedRegion> regions, World world, List<Material> blockRegions){
-        for(int i = 0;i < regions.size();i++){
-            ProtectedRegion region = regions.get(i);
-            Location center = getRegionCenter(region,world);
-            if(blockRegions.contains(center.getBlock().getType())){
-                continue;
-            }
-            regions.remove(region);
-        }
-        return regions;
     }
     public Location getRegionCenter(ProtectedRegion region, World world) {
         BlockVector3 minPoint = region.getMinimumPoint();
@@ -60,8 +39,25 @@ public class WorldGuardApi {
 
         return new Location(world, centerX, centerY, centerZ);
     }
+    public List<ProtectedRegion> gerAllRegionsInWorld(World world){
+        List<ProtectedRegion> allRegions = new ArrayList<>();
+        RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
+        if(regionManager == null) return allRegions;
+        allRegions.addAll(regionManager.getRegions().values());
+        return allRegions;
+    }
 
-    public boolean isExists(){
-        return enableState;
+    public List<ProtectedRegion> protectionStonesRegionFilter(List<Material> PSBlocks, ProtectionStonesAPI protectionStonesAPI, List<ProtectedRegion> regions, World world){
+        List<ProtectedRegion> psRegions = new ArrayList<>();
+        for(ProtectedRegion region: regions){
+            if(protectionStonesAPI.isPSRegion(world,PSBlocks,region)){
+                psRegions.add(region);
+            }
+        }
+        return psRegions;
+    }
+
+    public boolean isNotExists(){
+        return !enableState;
     }
 }

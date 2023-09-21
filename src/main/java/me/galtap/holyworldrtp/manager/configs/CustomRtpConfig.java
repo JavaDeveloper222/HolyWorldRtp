@@ -34,6 +34,7 @@ public class CustomRtpConfig extends AbstractConfig {
                 cooldownMap.put(group,cooldownTime);
             }
             CustomRtpContainer customRtpContainer = new CustomRtpContainer(rtpName.toLowerCase(),xMin,xMax,zMin,zMax,world,cooldownMap,worldBlockList);
+            if(customRtpContainers.containsKey(customRtpContainer.getName())) continue;
             customRtpContainers.put(customRtpContainer.getName(),customRtpContainer);
         }
     }

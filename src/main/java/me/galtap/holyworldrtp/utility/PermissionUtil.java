@@ -2,7 +2,7 @@ package me.galtap.holyworldrtp.utility;
 
 import org.bukkit.entity.Player;
 
-public class PermissionUtil {
+public final class PermissionUtil {
     private PermissionUtil(){
         throw new AssertionError("Utility class PermissionUtil cannot be instantiated.");
     }

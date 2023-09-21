@@ -8,13 +8,14 @@ import org.bukkit.potion.PotionEffect;
 
 import java.util.List;
 
-public class StreamUpdate {
+public final class StreamUpdate {
+    private static final int TICK = 20;
+    private static int checkMoveTask;
+    private static int teleportTask;
     private StreamUpdate() {
         // private constructor to prevent instantiation
         throw new AssertionError("Utility class StreamUpdate cannot be instantiated.");
     }
-    private static int checkMoveTask;
-    private static int teleportTask;
     public static void checkMove(Location startLocation, Player player, String message, JavaPlugin plugin){
          checkMoveTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
              Location newLocation = player.getLocation();
@@ -23,16 +24,16 @@ public class StreamUpdate {
                  player.sendMessage(message);
                  Bukkit.getScheduler().cancelTask(checkMoveTask);
              }
-         },0,20);
+         },0,TICK);
     }
     public static void teleport(int delay, Player player, Location location, int noDamageTime, List<PotionEffect> effects, String teleportMessage, String coordinates, JavaPlugin plugin){
         teleportTask = Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             Bukkit.getScheduler().cancelTask(checkMoveTask);
             player.teleport(location);
-            player.setNoDamageTicks(noDamageTime*20);
+            player.setNoDamageTicks(noDamageTime*TICK);
             player.addPotionEffects(effects);
             player.sendMessage(teleportMessage);
             player.sendMessage(coordinates);
-        },delay* 20L);
+        }, (long) delay * TICK);
     }
 }

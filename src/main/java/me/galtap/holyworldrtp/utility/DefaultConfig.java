@@ -9,11 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class DefaultConfig {
     private final JavaPlugin plugin;
-    private FileConfiguration section = null;
-    private File file = null;
+    private FileConfiguration section;
+    private File file;
     private final String name;
 
     public DefaultConfig(JavaPlugin plugin, String name) {
@@ -30,7 +31,7 @@ public class DefaultConfig {
         this.section = YamlConfiguration.loadConfiguration(this.file);
         InputStream defaultSteam = this.plugin.getResource(this.name);
         if (defaultSteam != null) {
-            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultSteam));
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultSteam, StandardCharsets.UTF_8));
             this.section.setDefaults(defaultConfig);
         }
 

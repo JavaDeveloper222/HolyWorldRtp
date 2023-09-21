@@ -56,11 +56,11 @@ public class RtpCMD extends AbstractCommand{
                 return;
             }
             if(args[0].equalsIgnoreCase("base")){
-                if(!apiFactory.getGuardApi().isExists()) return;
+                if(apiFactory.getGuardApi().isNotExists()) return;
                 BaseRtp baseRtp = rtpFactory.getBaseRtp();
                 if(baseRtp.hasNotPermission(player)) return;
                 if(baseRtp.hasCooldown(player)) return;
-                Location centerRegion = baseRtp.getRandomCenterRegion(apiFactory.getGuardApi(),player);
+                Location centerRegion = baseRtp.getRandomCenterRegion(apiFactory.getGuardApi(),player,apiFactory.getProtectionStonesAPI());
                 if(centerRegion == null) return;
                 Location location = baseRtp.getSafeLocation(centerRegion);
                 if(location == null) return;

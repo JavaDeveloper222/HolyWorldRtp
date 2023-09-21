@@ -1,6 +1,7 @@
 package me.galtap.holyworldrtp.entity.specificAbstractRtp;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.galtap.holyworldrtp.api.ProtectionStonesAPI;
 import me.galtap.holyworldrtp.api.WorldGuardApi;
 import me.galtap.holyworldrtp.entity.SpecificAbstractRtp;
 import me.galtap.holyworldrtp.manager.configs.BaseRtpConfig;
@@ -10,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BaseRtp extends SpecificAbstractRtp {
@@ -20,14 +22,28 @@ public class BaseRtp extends SpecificAbstractRtp {
         this.config = config;
         this.messages = messages;
     }
-    public Location getRandomCenterRegion(WorldGuardApi worldGuardApi, Player player){
+    public Location getRandomCenterRegion(WorldGuardApi worldGuardApi, Player player, ProtectionStonesAPI protectionStonesAPI){
         player.sendTitle(messages.getFindBaseTitleText(),messages.getFindBaseTitleSubtext(),30,60,30);
         World world = getRandmWorld();
         if(world == null){
             player.sendMessage(messages.getNotFound());
             return null;
         }
-        ProtectedRegion region = worldGuardApi.getRandomRegion(world,config.isEnableBlockCheck(),config.getRegionBlocks());
+        List<ProtectedRegion> allRegions = worldGuardApi.gerAllRegionsInWorld(world);
+        if(allRegions.isEmpty()){
+            player.sendMessage(messages.getNotFound());
+            return null;
+        }
+        if(config.isEnableBlockCheck()){
+            if(protectionStonesAPI.isNotExists()){
+                player.sendMessage(messages.getNotFound());
+                return null;
+            }
+            List<ProtectedRegion> updateRegions = new ArrayList<>(worldGuardApi.protectionStonesRegionFilter(config.getRegionBlocks(), protectionStonesAPI, allRegions, world));
+            allRegions.clear();
+            allRegions.addAll(updateRegions);
+        }
+        ProtectedRegion region = worldGuardApi.getRandomRegion(allRegions);
         if(region == null){
             player.sendMessage(messages.getNotFound());
             return null;

@@ -18,7 +18,8 @@ public final class HolyWorldRtp extends JavaPlugin {
         ErrorHandle errorHandle = new ErrorHandle("config.yml", "HolyWorldRtp");
         EffectConfig effectManager = new EffectConfig(configFactory.getEffectsConfig().getConfig());
         RtpFactory rtpFactory = new RtpFactory(this,errorHandle,configFactory.getMessageConfig().getConfig(),configFactory.getTitleConfig().getConfig(),effectManager);
-        if(!apiFactory.getGuardApi().isExists()) Bukkit.getLogger().warning("[HolyWorldRtp] внимание команда /rtp base не будет работать установите на сервер плагин worldGuard");
+        if(apiFactory.getGuardApi().isNotExists()) Bukkit.getLogger().warning("[HolyWorldRtp] внимание команда /rtp base не будет работать установите на сервер плагин worldGuard");
+        if(apiFactory.getProtectionStonesAPI().isNotExists()) Bukkit.getLogger().warning("[HolyWorldRtp] внимание если включена функция поиска регионов по блокам то нужен плагин ProtectionStones для корректной работы с защитными блоками. Дополнение к worldGuard");
         new RtpCMD(this,rtpFactory,apiFactory);
         Cooldown.create();
 
@@ -30,6 +31,6 @@ public final class HolyWorldRtp extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        Bukkit.getScheduler().cancelTasks(this);
     }
 }

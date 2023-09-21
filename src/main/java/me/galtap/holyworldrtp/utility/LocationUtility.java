@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class LocationUtility {
+public final class LocationUtility {
     private LocationUtility(){
         throw new AssertionError("Utility class LocationUtility cannot be instantiated.");
     }
@@ -23,8 +23,9 @@ public class LocationUtility {
         if (enableNegativeNum) {
             double xChance = Math.random();
             double zChance = Math.random();
-            if (xChance > 0.5) x *= -1;
-            if (zChance > 0.5) z *= -1;
+            double minusChance = 0.5;
+            if (xChance > minusChance) x *= -1;
+            if (zChance > minusChance) z *= -1;
         }
         return getValidLocation(world, x, yMax, z);
     }
