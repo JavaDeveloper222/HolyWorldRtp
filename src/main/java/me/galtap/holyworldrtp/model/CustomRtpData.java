@@ -2,34 +2,34 @@ package me.galtap.holyworldrtp.model;
 
 import org.bukkit.World;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class CustomRtpContainer {
-    private final String name;
+public class CustomRtpData {
+    private final String type;
     private final int xMin;
     private final int xMax;
-    private final int zMax;
     private final int zMin;
+    private final int zMax;
     private final World world;
-    private final HashMap<String, Integer> cooldownMap;
     private final List<String> worldBlockList;
+    private final Map<String, Integer> groupCooldownData;
 
-    public CustomRtpContainer(String name, int xMin, int xMax, int zMin, int zMax, World world, HashMap<String,Integer> cooldownMap, List<String> worldBlockList) {
+    public CustomRtpData(String type, int xMin, int xMax, int zMin, int zMax, World world, List<String> worldBlockList, Map<String,Integer> groupCooldownData){
 
-        this.name = name;
+        this.type = type;
         this.xMin = xMin;
         this.xMax = xMax;
         this.zMin = zMin;
         this.zMax = zMax;
         this.world = world;
-        this.cooldownMap = cooldownMap;
-        this.worldBlockList = worldBlockList;
+        this.worldBlockList = List.copyOf(worldBlockList);
+        this.groupCooldownData = Map.copyOf(groupCooldownData);
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
     public int getxMin() {
@@ -52,24 +52,24 @@ public class CustomRtpContainer {
         return world;
     }
 
-    public HashMap<String, Integer> getCooldownMap() {
-        return cooldownMap;
+    public List<String> getWorldBlockList() {
+        return List.copyOf(worldBlockList);
     }
 
-    public List<String> getWorldBlockList() {
-        return worldBlockList;
+    public Map<String, Integer> getGroupCooldownData() {
+        return Map.copyOf(groupCooldownData);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomRtpContainer that = (CustomRtpContainer) o;
-        return Objects.equals(name, that.name);
+        CustomRtpData that = (CustomRtpData) o;
+        return Objects.equals(type, that.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(type);
     }
 }

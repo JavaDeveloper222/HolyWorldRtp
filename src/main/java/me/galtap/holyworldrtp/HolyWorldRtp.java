@@ -2,35 +2,32 @@ package me.galtap.holyworldrtp;
 
 import me.galtap.holyworldrtp.command.RtpCMD;
 import me.galtap.holyworldrtp.factory.ApiFactory;
-import me.galtap.holyworldrtp.factory.ConfigFactory;
 import me.galtap.holyworldrtp.factory.RtpFactory;
-import me.galtap.holyworldrtp.manager.configs.EffectConfig;
+import me.galtap.holyworldrtp.factory.SettingsFactory;
 import me.galtap.holyworldrtp.utility.Cooldown;
-import me.galtap.holyworldrtp.utility.ErrorHandle;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class HolyWorldRtp extends JavaPlugin {
+    private static HolyWorldRtp instance;
     @Override
     public void onEnable() {
-        ConfigFactory configFactory = new ConfigFactory(this);
+        instance = this;
+        saveDefaultConfig();
+        SettingsFactory settingsFactory = new SettingsFactory();
         ApiFactory apiFactory = new ApiFactory();
-        ErrorHandle errorHandle = new ErrorHandle("config.yml", "HolyWorldRtp");
-        EffectConfig effectManager = new EffectConfig(configFactory.getEffectsConfig().getConfig());
-        RtpFactory rtpFactory = new RtpFactory(this,errorHandle,configFactory.getMessageConfig().getConfig(),configFactory.getTitleConfig().getConfig(),effectManager);
-        if(apiFactory.getGuardApi().isNotExists()) Bukkit.getLogger().warning("[HolyWorldRtp] внимание команда /rtp base не будет работать установите на сервер плагин worldGuard");
-        if(apiFactory.getProtectionStonesAPI().isNotExists()) Bukkit.getLogger().warning("[HolyWorldRtp] внимание если включена функция поиска регионов по блокам то нужен плагин ProtectionStones для корректной работы с защитными блоками. Дополнение к worldGuard");
-        new RtpCMD(this,rtpFactory,apiFactory);
+        RtpFactory rtpFactory = new RtpFactory(settingsFactory,apiFactory);
         Cooldown.create();
-
-
-
-
-
+        new RtpCMD(settingsFactory.getMessagesSettings(), settingsFactory.getGeneralSettings(), rtpFactory,apiFactory);
     }
 
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
     }
+
+    public static HolyWorldRtp getInstance() {
+        return instance;
+    }
+
 }

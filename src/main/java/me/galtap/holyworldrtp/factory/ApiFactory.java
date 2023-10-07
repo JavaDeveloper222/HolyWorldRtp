@@ -1,21 +1,21 @@
 package me.galtap.holyworldrtp.factory;
 
-import me.galtap.holyworldrtp.api.ProtectionStonesAPI;
-import me.galtap.holyworldrtp.api.WorldGuardApi;
+import me.galtap.holyworldrtp.api.ProtectionStonesManager;
+import me.galtap.holyworldrtp.api.WorldGuardManager;
 
 public class ApiFactory {
-    private final WorldGuardApi guardApi;
-    private final ProtectionStonesAPI protectionStonesAPI;
+    private final WorldGuardManager worldGuardManager;
+    private final ProtectionStonesManager protectionStonesManager;
     public ApiFactory(){
-        guardApi = new WorldGuardApi();
-        protectionStonesAPI = new ProtectionStonesAPI();
+        worldGuardManager = new WorldGuardManager();
+        protectionStonesManager = new ProtectionStonesManager();
     }
 
-    public WorldGuardApi getGuardApi() {
-        return guardApi;
+    public WorldGuardManager getWorldGuardManager() {
+        return worldGuardManager;
     }
 
-    public ProtectionStonesAPI getProtectionStonesAPI() {
-        return protectionStonesAPI;
+    public ProtectionStonesManager getProtectionStonesManager() {
+        return protectionStonesManager;
     }
 }

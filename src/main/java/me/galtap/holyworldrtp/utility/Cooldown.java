@@ -6,10 +6,7 @@ public final class Cooldown {
     private static ConcurrentHashMap<String, Long> cool;
     private static long delay;
     private static final long MILLISECONDS = 1000;
-    private Cooldown(){
-        // private constructor to prevent instantiation
-        throw new AssertionError("Utility class Cooldown cannot be instantiated.");
-    }
+    private Cooldown(){}
 
     public static void create() {
         cool = new ConcurrentHashMap<>();
@@ -19,7 +16,7 @@ public final class Cooldown {
         cool.put(cmd, System.currentTimeMillis() + second * MILLISECONDS);
     }
 
-    public static boolean checkCooldown(String cmd) {
+    public static boolean isHasCooldown(String cmd) {
         if (cool.containsKey(cmd) && cool.get(cmd) > System.currentTimeMillis()) {
             delay = (cool.get(cmd) - System.currentTimeMillis()) / MILLISECONDS;
             return true;

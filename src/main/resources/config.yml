@@ -6,7 +6,8 @@ StandardRtp:
   zMax: 2000
   world: "world"
   cooldown: 10
-
+  #мир, где игрок не будет иметь задержку перед телепортацией
+  spawnWorld: "world"
   #включить проверку движения при стандартной случайной телепортации
   enableCheckMove: true
 
@@ -31,7 +32,6 @@ StandardRtp:
 #создание своих собственных видов
 CustomRtp:
   type:
-
     long:
       xMin: 2000
       xMax: 3000
@@ -60,10 +60,10 @@ CustomRtp:
 
 RtpPlayer:
   minOnlineInServer: 2
-  minOnlineInWorld: 2
   minDistance: 10
   maxDistance: 110
   cooldown: 60
+  tryFoundPlayer: 25
 
   #миры где не происходит поиск игроков
   worldBlock:
@@ -73,14 +73,14 @@ RtpBase:
   minDistance: 2
   maxDistance: 102
   cooldown: 60
-
+  tryFoundBase: 25
   #поиск баз имеет 2 режима
   blockCheck:
     #если включено, то поиск будет только тех баз которые имеют в центре нужные блоки
     enable: true
     regionBlocks:
       - DIAMOND
-      - EMERALD
+      - EMERALD_ORE
       - NETHERITE_BLOCK
 
   #миры, где поиск баз не будет

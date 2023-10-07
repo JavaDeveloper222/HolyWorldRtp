@@ -2,6 +2,7 @@ name: HolyWorldRtp
 version: '${project.version}'
 main: me.galtap.holyworldrtp.HolyWorldRtp
 api-version: '1.16'
+prefix: HolyWorldRtp
 commands:
   rtp:
     description: команда которая дает доступ к случайным телепортам

@@ -1,6 +1,6 @@
 package me.galtap.holyworldrtp.utility;
 
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +31,7 @@ public class DefaultConfig {
         this.section = YamlConfiguration.loadConfiguration(this.file);
         InputStream defaultSteam = this.plugin.getResource(this.name);
         if (defaultSteam != null) {
-            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultSteam, StandardCharsets.UTF_8));
+            var defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultSteam, StandardCharsets.UTF_8));
             this.section.setDefaults(defaultConfig);
         }
 
@@ -48,13 +48,13 @@ public class DefaultConfig {
             try {
                 this.getConfig().save(this.file);
             } catch (IOException e) {
-                String errorMessage = String.format("Failed to save the file %s. Reason: %s", this.file.getName(), e.getMessage());
-                throw new RuntimeException(ChatColor.RED + errorMessage, e);
+                var errorMessage = String.format("Возникла ошибка при сохранении файла: %s. Причина -> %s", this.file.getName(), e.getMessage());
+                Bukkit.getLogger().severe(errorMessage);
             }
         }
     }
 
-    public void saveDefaultConfig() {
+    public final void saveDefaultConfig() {
         if (this.file == null) {
             this.file = new File(this.plugin.getDataFolder(), this.name);
         }

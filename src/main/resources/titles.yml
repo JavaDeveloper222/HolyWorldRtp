@@ -2,17 +2,29 @@ StandardRtp:
   teleportTitle:
     text: "§bТелепортация"
     subtext: "через §b{sec} §fсекунд"
+    time_1: 30
+    time_2: 60
+    time_3: 30
 
 RtpPlayer:
   findPlayerTitle:
     text: "Пожалуйста подождите"
     subtext: "идет поиск игрока"
+    time_1: 30
+    time_2: 60
+    time_3: 30
   warningTitle:
     text: "Осторожно"
     subtext: "рядом может быть игрок"
+    time_1: 30
+    time_2: 60
+    time_3: 30
 
 
 RtpBase:
   findBaseTitle:
     text: "Подождите..."
     subtext: "идет поиск базы"
+    time_1: 30
+    time_2: 60
+    time_3: 30

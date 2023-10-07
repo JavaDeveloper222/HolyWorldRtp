@@ -4,13 +4,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 
-import java.util.Objects;
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class LocationUtility {
     private LocationUtility(){
-        throw new AssertionError("Utility class LocationUtility cannot be instantiated.");
     }
     public static Location getRandomLocation(int xMin, int xMax, int zMin, int zMax, int yMax, World world, boolean enableNegativeNum) {
         if (world == null || yMax < world.getMinHeight() || yMax > world.getMaxHeight()) {
@@ -24,14 +23,18 @@ public final class LocationUtility {
             double xChance = Math.random();
             double zChance = Math.random();
             double minusChance = 0.5;
-            if (xChance > minusChance) x *= -1;
-            if (zChance > minusChance) z *= -1;
+            if (xChance > minusChance){
+                x *= -1;
+            }
+            if (zChance > minusChance){
+                z *= -1;
+            }
         }
         return getValidLocation(world, x, yMax, z);
     }
 
-    public static Location getRandomMaterialSafeLocation(int xMin, int xMax, int zMin, int zMax, int yMax, World world, boolean enableNegativeNum, Set<Material> blockList, int tryFind) {
-        if (world == null || tryFind <= 0){
+    public static Location getRandomMaterialSafeLocation(int xMin, int xMax, int zMin, int zMax, int yMax, World world, boolean enableNegativeNum, Collection<Material> blockList, int tryFind) {
+        if (world == null || tryFind <= 0 || blockList == null){
             return null;
         }
         for (; tryFind > 0; tryFind--) {
@@ -39,13 +42,17 @@ public final class LocationUtility {
             if (location == null || blockList.contains(location.getBlock().getType()) || !isInBarrier(location)) {
                 continue;
             }
+            location.setY(location.getBlockY()+1);
             return location;
+
         }
         return null;
     }
 
     public static Location getRandomMaterialSafeLocationInRadius(Location center, int radius, int minDistance, int yMax, Set<Material> blockList, int tryFind) {
-        if (center == null || tryFind <= 0) return null;
+        if (center == null || tryFind <= 0){
+            return null;
+        }
         World world = center.getWorld();
         int xMin = center.getBlockX() - radius;
         int xMax = center.getBlockX() + radius;
@@ -56,6 +63,7 @@ public final class LocationUtility {
             if (location == null || location.distance(center) < minDistance) {
                 continue;
             }
+            location.setY(location.getBlockY()+1);
             return location;
         }
         return null;
@@ -76,8 +84,10 @@ public final class LocationUtility {
     }
 
     private static boolean isInBarrier(Location location) {
-        if (location == null) return false;
-        return Objects.requireNonNull(location.getWorld()).getWorldBorder().isInside(location);
+        if (location == null || location.getWorld() == null){
+            return false;
+        }
+        return location.getWorld().getWorldBorder().isInside(location);
     }
     public static int rndInt(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max + 1);

@@ -1,98 +1,137 @@
 package me.galtap.holyworldrtp.command;
 
-import me.galtap.holyworldrtp.entity.justRtp.CustomRtp;
-import me.galtap.holyworldrtp.entity.justRtp.StandardRtp;
-import me.galtap.holyworldrtp.entity.specificAbstractRtp.BaseRtp;
-import me.galtap.holyworldrtp.entity.specificAbstractRtp.PlayerRtp;
+import me.galtap.holyworldrtp.HolyWorldRtp;
+import me.galtap.holyworldrtp.api.ProtectionStonesManager;
+import me.galtap.holyworldrtp.api.WorldGuardManager;
+import me.galtap.holyworldrtp.core.IRtp;
+import me.galtap.holyworldrtp.core.PrimitiveRtp;
+import me.galtap.holyworldrtp.core.impl.BaseRtp;
+import me.galtap.holyworldrtp.core.impl.CustomRtp;
+import me.galtap.holyworldrtp.core.impl.PlayerRtp;
 import me.galtap.holyworldrtp.factory.ApiFactory;
 import me.galtap.holyworldrtp.factory.RtpFactory;
+import me.galtap.holyworldrtp.settings.GeneralSettings;
+import me.galtap.holyworldrtp.settings.MessagesSettings;
+import me.galtap.holyworldrtp.utility.Cooldown;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class RtpCMD extends AbstractCommand{
-
-
+    private final MessagesSettings messagesSettings;
+    private final GeneralSettings generalSettings;
     private final RtpFactory rtpFactory;
-    private final ApiFactory apiFactory;
+    private final WorldGuardManager worldGuardManager;
+    private final ProtectionStonesManager protectionStonesManager;
 
-    public RtpCMD(JavaPlugin plugin, RtpFactory rtpFactory, ApiFactory apiFactory) {
-        super("rtp", plugin);
+    public RtpCMD(MessagesSettings messagesSettings, GeneralSettings generalSettings, RtpFactory rtpFactory, ApiFactory apiFactory) {
+        super("rtp", HolyWorldRtp.getInstance());
+        this.messagesSettings = messagesSettings;
+        this.generalSettings = generalSettings;
         this.rtpFactory = rtpFactory;
-        this.apiFactory = apiFactory;
+        worldGuardManager = apiFactory.getWorldGuardManager();
+        protectionStonesManager = apiFactory.getProtectionStonesManager();
     }
 
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         if(!(sender instanceof Player)) return;
+
         Player player = (Player) sender;
         if(args.length == 0){
-            StandardRtp rtp = rtpFactory.getStandardRtp();
-            if(rtp.hasNotPermission(player)) return;
-            if(rtp.isNotForbiddenWorld(player)) return;
-            if(rtp.hasCooldown(player)) return;
-            Location location = rtp.getSafeLocation();
-            rtp.teleport(location,player);
+            primitiveRtpCommandProcess(rtpFactory.getStandardRtp(),player);
             return;
         }
+
         if(args.length == 1){
             if(args[0].equalsIgnoreCase("player")){
                 PlayerRtp rtp = rtpFactory.getPlayerRtp();
-                if(rtp.hasNotPermission(player)) return;
-                if(rtp.hasCooldown(player)) return;
-                if(!rtp.serverHasPlayers(player)) return;
-                World world = rtp.getRandmWorld();
-                if(!rtp.worldHasPlayers(world,player)) return;
-                Player target = rtp.getRandomPlayer(world,player);
-                if(target == null) return;
-                Location location = rtp.getSafeLocation(target.getLocation());
-                rtp.teleport(location,player);
+                if(rtp.isHasNotPermission(player)){
+                    player.sendMessage(messagesSettings.getNoPermissionsMsg());
+                    return;
+                }
+                if(!rtp.serverHasPlayers()){
+                    player.sendMessage(messagesSettings.getMinPlayersInServerMsg());
+                    return;
+                }
+                universalRtpCommandProcess(rtp,player);
                 return;
             }
             if(args[0].equalsIgnoreCase("base")){
-                if(apiFactory.getGuardApi().isNotExists()) return;
+                if(!worldGuardManager.isEnable()){
+                    return;
+                }
                 BaseRtp baseRtp = rtpFactory.getBaseRtp();
-                if(baseRtp.hasNotPermission(player)) return;
-                if(baseRtp.hasCooldown(player)) return;
-                Location centerRegion = baseRtp.getRandomCenterRegion(apiFactory.getGuardApi(),player,apiFactory.getProtectionStonesAPI());
-                if(centerRegion == null) return;
-                Location location = baseRtp.getSafeLocation(centerRegion);
-                if(location == null) return;
-                baseRtp.teleport(location,player);
+                if(worldGuardManager.isEnable() && baseRtp.getSettings().isRegionBlocksEnable() && protectionStonesManager.isNotEnabled()) {
+                    return;
+                }
+                if(baseRtp.isHasNotPermission(player)){
+                    player.sendMessage(messagesSettings.getNoPermissionsMsg());
+                    return;
+                }
+                universalRtpCommandProcess(baseRtp,player);
                 return;
             }
             if(args[0].equalsIgnoreCase("help")){
-                for(String text: rtpFactory.getHelpList()){
-                    player.sendMessage(text);
-                }
+                generalSettings.getHelpList().forEach(player::sendMessage);
                 return;
             }
-            String rtpType = args[0];
             CustomRtp customRtp = rtpFactory.getCustomRtp();
-            if(!customRtp.isTrueType(rtpType,player)) return;
-            if(customRtp.hasNotPermission(player)) return;
-            if(customRtp.isNotForbiddenWorld(player)) return;
-            if(customRtp.hasCooldown(player)) return;
-            Location location = customRtp.getSafeLocation();
-            customRtp.teleport(location,player);
+            if(!customRtp.isTrueType(args[0])){
+                player.sendMessage(messagesSettings.getHelpMsg());
+                return;
+            }
+            primitiveRtpCommandProcess(customRtp,player);
+            return;
+
+        }
+        player.sendMessage(messagesSettings.getHelpMsg());
+    }
+
+
+    private void primitiveRtpCommandProcess(PrimitiveRtp rtp, Player player){
+        if(rtp.isHasNotPermission(player)){
+            player.sendMessage(messagesSettings.getNoPermissionsMsg());
             return;
         }
-        player.sendMessage(rtpFactory.getErrorArgs());
+        if(!rtp.isSafeWorld(player)){
+            String message = messagesSettings.getWorldBlockMsg();
+            player.sendMessage(message.replace("{world}",player.getWorld().getName()));
+            return;
+        }
+        if(rtp.isHasCooldown(player)){
+            String cooldownMsg = messagesSettings.getCooldownMsg();
+            player.sendMessage(cooldownMsg.replace("{sec}", String.valueOf(Cooldown.getDelay())));
+            return;
+        }
+        Location location = rtp.getSafeLocation(player);
+        if(location == null){
+            player.sendMessage(messagesSettings.getErrorMsg());
+            return;
+        }
+        rtp.teleport(player,location);
+    }
+    public void universalRtpCommandProcess(IRtp rtp, Player player){
+        if(rtp.isHasCooldown(player)){
+            String message = messagesSettings.getCooldownMsg();
+            player.sendMessage(message.replace("{sec}",String.valueOf(Cooldown.getDelay())));
+            return;
+        }
+        Location location = rtp.getSafeLocation(player);
+        if(location == null){
+            player.sendMessage(messagesSettings.getErrorMsg());
+            return;
+        }
+        player.teleport(location);
     }
     @Override
     public List<String> complete(CommandSender sender, String[] args){
-        if(!(sender instanceof Player)) return Collections.emptyList();
-        List<String> list = new ArrayList<>();
         if(args.length == 1){
-            list.add("help");
-            return list;
+            return List.of("help");
         }
-        return Collections.emptyList();
+        return null;
     }
+
 }
