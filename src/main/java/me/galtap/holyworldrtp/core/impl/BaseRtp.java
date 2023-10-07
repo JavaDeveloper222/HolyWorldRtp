@@ -48,10 +48,10 @@ public class BaseRtp extends UniversalRtp {
 
     private Location getRandomRegionLocation(Map<ProtectedRegion,Location> regionLocationMap, int radius, int minDistance, int yMax, Set<Material> blockList, int tryFind){
         List<ProtectedRegion> regions = new ArrayList<>(regionLocationMap.keySet());
-        int size = regions.size();
         Location location = null;
         for(int i = 0;i < settings.getTryFoundBase();i++){
             if(regions.isEmpty()) return null;
+            int size = regions.size();
             int randomIndex = LocationUtility.rndInt(0, size-1);
             ProtectedRegion region = regions.get(randomIndex);
             Location center = regionLocationMap.get(region);
