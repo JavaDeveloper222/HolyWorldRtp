@@ -28,7 +28,7 @@ public abstract class PrimitiveRtp implements IRtp {
 
             if(SimpleUtil.isHavePermission(permission,player)){
                 try {
-                    int priority = Integer.parseInt(permission.substring(permission.lastIndexOf("_") + 1));
+                    int priority = Integer.parseInt(permission.substring(permission.lastIndexOf(".") + 1));
                     if(priority > highestPriority){
                         highestPriority = priority;
                         highestPriorityGroup = groupName;

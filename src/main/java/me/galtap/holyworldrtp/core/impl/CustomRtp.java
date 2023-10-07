@@ -37,7 +37,7 @@ public class CustomRtp extends PrimitiveRtp {
 
     @Override
     public String getPermission() {
-        return "holy.custom.rtp."+rtpData.getType();
+        return "holy.custom."+rtpData.getType();
     }
 
     @Override

@@ -59,7 +59,7 @@ public class StandardRtp extends PrimitiveRtp {
 
     @Override
     public String getPermission() {
-        return "holy.standard.rtp";
+        return "holy.rtp";
     }
 
     @Override
