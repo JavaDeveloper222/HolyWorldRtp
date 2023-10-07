@@ -18,16 +18,17 @@ StandardRtp:
 
 
   #настройка групп и их задержек перед телепортацией
+  #после "_" ставится цифра обозначающая приоритет
   delay:
-    default: 5
-    HOLY: 5
-    PALADIN: 5
-    MASTER: 5
-    GLADIATOR: 5
-    OVERLORD: 5
-    ELDER: 5
-    PHANTOM: 0
-    KING: 0
+    default_1: 5
+    HOLY_2: 5
+    PALADIN_3: 5
+    MASTER_4: 5
+    GLADIATOR_5: 5
+    OVERLORD_6: 5
+    ELDER_7: 5
+    PHANTOM_8: 0
+    KING_9: 0
 
 #создание своих собственных видов
 CustomRtp:
@@ -49,13 +50,13 @@ CustomRtp:
   cooldown:
 
     long:
-      default: 30
-      MASTER: 30
-      GLADIATOR: 30
-      OVERLORD: 30
-      ELDER: 30
-      PHANTOM: 30
-      KING: 30
+      default_1: 30
+      MASTER_2: 30
+      GLADIATOR_3: 30
+      OVERLORD_4: 30
+      ELDER_5: 30
+      PHANTOM_6: 30
+      KING_7: 30
 
 
 RtpPlayer:

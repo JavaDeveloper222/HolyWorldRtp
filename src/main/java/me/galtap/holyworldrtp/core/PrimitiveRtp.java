@@ -20,16 +20,29 @@ public abstract class PrimitiveRtp implements IRtp {
     }
     @Override
     public boolean isHasNotPermission(Player player) {
+        int highestPriority = Integer.MIN_VALUE;
+        String highestPriorityGroup = null;
         for(Map.Entry<String,Integer> entry: getGroupData().entrySet()){
             String groupName = entry.getKey();
             String permission = getPermission()+"."+groupName;
 
             if(SimpleUtil.isHavePermission(permission,player)){
-                value = entry.getValue();
-                return false;
+                try {
+                    int priority = Integer.parseInt(permission.substring(permission.lastIndexOf("_") + 1));
+                    if(priority > highestPriority){
+                        highestPriority = priority;
+                        highestPriorityGroup = groupName;
+                    }
+                }catch (NumberFormatException ignored){
+                }
             }
         }
+        if(highestPriorityGroup != null){
+            value = getGroupData().getOrDefault(highestPriorityGroup,0);
+            return false;
+        }
         return true;
+
     }
 
     public boolean isSafeWorld(Entity player) {
