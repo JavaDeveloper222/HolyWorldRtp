@@ -25,10 +25,9 @@ public abstract class PrimitiveRtp implements IRtp {
         for(Map.Entry<String,Integer> entry: getGroupData().entrySet()){
             String groupName = entry.getKey();
             String permission = getPermission()+"."+groupName;
-
             if(SimpleUtil.isHavePermission(permission,player)){
                 try {
-                    int priority = Integer.parseInt(permission.substring(permission.lastIndexOf(".") + 1));
+                    int priority = Integer.parseInt(permission.substring(permission.lastIndexOf("_") + 1));
                     if(priority > highestPriority){
                         highestPriority = priority;
                         highestPriorityGroup = groupName;
