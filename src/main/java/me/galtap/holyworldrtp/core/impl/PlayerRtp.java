@@ -44,14 +44,14 @@ public class PlayerRtp extends UniversalRtp {
         int maxY = generalSettings.getMaxY();
         Set<Material> blockList = EnumSet.copyOf(generalSettings.getBlockList());
         int tryFindLocation = generalSettings.getTryFindLocation();
-        int playersSize = players.size();
-        return playerFindProcess(players,playersSize,tryFoundPlayer,maxDistance,minDistance,maxY,blockList,tryFindLocation);
+        return playerFindProcess(players,tryFoundPlayer,maxDistance,minDistance,maxY,blockList,tryFindLocation);
     }
-    private static Location playerFindProcess(List<Player> players,int size,int tryFoundPlayer, int maxDistance, int minDistance, int maxY, Set<Material> blockList, int tryFindLocation){
+    private static Location playerFindProcess(List<Player> players,int tryFoundPlayer, int maxDistance, int minDistance, int maxY, Set<Material> blockList, int tryFindLocation){
         Location location = null;
         for (int i = 0; i < tryFoundPlayer; i++) {
             if(players.isEmpty()) return null;
-            int randomIndex = LocationUtility.rndInt(0, size-1);
+            int playersSize = players.size();
+            int randomIndex = LocationUtility.rndInt(0, playersSize-1);
             Player target = players.get(randomIndex);
             if (target == null) {
                 continue;
